@@ -1,6 +1,6 @@
-import fake.creature as service
+import app.service.creature as service
 from fastapi import APIRouter
-from model.creature import Creature
+from app.models.creature import Creature
 
 router = APIRouter(prefix="/creature", tags=["creature"])
 

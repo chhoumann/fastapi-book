@@ -1,4 +1,4 @@
-from model.creature import Creature
+from app.models.creature import Creature
 
 _creatures = [
     Creature(name="Yeti", aka="Abominable Snowman", country="CN", area="Himalayas", description="Hirsute Himalayan"),
@@ -24,6 +24,7 @@ def get_one(name: str) -> Creature | None:
 # the actual fake _creatures list:
 def create(creature: Creature) -> Creature:
     """Add a creature"""
+    _creatures.append(creature)
     return creature
 
 

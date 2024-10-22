@@ -1,6 +1,6 @@
-import fake.explorer as service
+import app.service.explorer as service
 from fastapi import APIRouter
-from model.explorer import Explorer
+from app.models.explorer import Explorer
 
 router = APIRouter(prefix="/explorer", tags=["explorer"])
 
