@@ -1,4 +1,4 @@
-import app.fake.creature as data
+import app.data.creature as data
 from app.models.creature import Creature
 
 
@@ -14,13 +14,13 @@ def create(creature: Creature) -> Creature:
     return data.create(creature)
 
 
-def replace(id: int, creature: Creature) -> Creature:
-    return data.replace(id, creature)
+def replace(creature: Creature) -> Creature:
+    return data.replace(creature)
 
 
-def modify(id: int, creature: Creature) -> Creature:
-    return data.modify(id, creature)
+def modify(creature: Creature) -> Creature:
+    return data.modify(creature)
 
 
-def delete(id, creature: Creature) -> None:
+def delete(id: str) -> None:
     return data.delete(id)

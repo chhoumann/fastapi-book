@@ -1,10 +1,14 @@
+from fastapi import APIRouter, HTTPException
+from starlette import status as HTTPStatus
+
 import app.service.creature as service
-from fastapi import APIRouter
+from app.errors import Duplicate, Missing
 from app.models.creature import Creature
 
 router = APIRouter(prefix="/creature", tags=["creature"])
 
 
+@router.get("")
 @router.get("/")
 async def get_all():
     return service.get_all()
@@ -12,24 +16,42 @@ async def get_all():
 
 @router.get("/{name}")
 async def get_one(name: str):
-    return service.get_one(name)
+    try:
+        return service.get_one(name)
+    except Missing as e:
+        raise HTTPException(status_code=HTTPStatus.HTTP_404_NOT_FOUND, detail=str(e)) from e
 
 
-@router.post("/")
+@router.post("", status_code=201)
+@router.post("/", status_code=201)
 async def create(creature: Creature):
-    return service.create(creature)
+    try:
+        return service.create(creature)
+    except Duplicate as e:
+        raise HTTPException(status_code=HTTPStatus.HTTP_409_CONFLICT, detail=str(e)) from e
 
 
+@router.put("")
 @router.put("/")
 async def replace(creature: Creature):
-    return service.replace(creature)
+    try:
+        return service.replace(creature)
+    except Missing as e:
+        raise HTTPException(status_code=HTTPStatus.HTTP_404_NOT_FOUND, detail=str(e)) from e
 
 
-@router.patch("/")
+@router.patch("")
+@router.patch("/", status_code=200)
 async def modify(creature: Creature):
-    return service.modify(creature)
+    try:
+        return service.modify(creature)
+    except Missing as e:
+        raise HTTPException(status_code=HTTPStatus.HTTP_404_NOT_FOUND, detail=str(e)) from e
 
 
 @router.delete("/{name}")
 async def delete(name: str):
-    return service.delete(name)
+    try:
+        service.delete(name)
+    except Missing as e:
+        raise HTTPException(status_code=HTTPStatus.HTTP_404_NOT_FOUND, detail=str(e)) from e

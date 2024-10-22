@@ -1,4 +1,4 @@
-import app.fake.explorer as data
+import app.data.explorer as data
 from app.models.explorer import Explorer
 
 
@@ -14,13 +14,13 @@ def create(explorer: Explorer) -> Explorer:
     return data.create(explorer)
 
 
-def replace(id: int, explorer: Explorer) -> Explorer:
-    return data.replace(id, explorer)
+def replace(explorer: Explorer) -> Explorer:
+    return data.replace(explorer)  # type: ignore
 
 
-def modify(id: int, explorer: Explorer) -> Explorer:
-    return data.modify(id, explorer)
+def modify(explorer: Explorer) -> Explorer:
+    return data.modify(explorer)  # type: ignore
 
 
-def delete(id, explorer: Explorer) -> None:
+def delete(id: str) -> None:
     return data.delete(id)
